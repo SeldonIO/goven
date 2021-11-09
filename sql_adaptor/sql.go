@@ -12,7 +12,7 @@ import (
 
 type (
 	// ValidatorFunc takes a field name and validates that it is a legal/correct format.
-	ValidatorFunc     = func(s string) error
+	ValidatorFunc = func(s string) error
 	// ParseValidateFunc takes an Expression from the AST and returns a templated SQL query.
 	ParseValidateFunc = func(ex *parser.Expression) (*SqlResponse, error)
 )

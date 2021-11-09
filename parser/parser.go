@@ -152,7 +152,7 @@ func (p *Parser) parseExpression() (Node, error) {
 			}
 			exp.Comparator = lit
 		// Looking for the Value
-		case exp.Value == "" :
+		case exp.Value == "":
 			if tok != STRING {
 				// If we didn't have an empty string in the value field - return an error.
 				if isValueEmpty {
