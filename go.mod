@@ -1,4 +1,4 @@
-module github.com/SeldonIO/goven
+module github.com/seldonio/goven
 
 go 1.16
 
