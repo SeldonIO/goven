@@ -3,7 +3,7 @@ package sql_adaptor
 import (
 	"errors"
 	"fmt"
-	"github.com/SeldonIO/goven/parser"
+	"github.com/seldonio/goven/parser"
 	"strconv"
 )
 

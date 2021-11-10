@@ -3,7 +3,7 @@ package sql_adaptor_test
 import (
 	"database/sql"
 	"fmt"
-	"github.com/SeldonIO/goven/sql_adaptor"
+	"github.com/seldonio/goven/sql_adaptor"
 	"reflect"
 	"testing"
 	"time"
