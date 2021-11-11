@@ -7,7 +7,7 @@ Goven (go-oven) is a go library that allows you to have a drop-in query language
 * Easily extensible to support more advanced queries for your own schema.
 * Basic grammar that allows for powerful queries.
 
-Like a real life oven, it takes something raw (your database struct + a query input) and produces something specific (the schema specific parser + SQL output). We call the adaptors "recipes" that goven can make. Currently Goven only supports a SQL adaptor, but the AST produced by the lexer/parser can easily be extended to other query languages.
+Like a real life oven, it takes something raw (your database struct + a query input) and produces something specific (the schema specific parser + SQL output). We call the adaptors "recipes" that Goven can make. Currently Goven only supports a SQL adaptor, but the AST produced by the lexer/parser can easily be extended to other query languages.
 
 ## Recipes
 
