@@ -82,7 +82,7 @@ func (s *SqlAdaptor) parseNodeToSQL(node parser.Node) (*SqlResponse, error) {
 		} else {
 			// Field is not valid because it must match either a custom regex, or have a validator.
 			// If it does neither then we do not expect this field name.
-			return nil, errors.New(fmt.Sprintf("field '%s' is not valid", lowerCamelCase))
+			return nil, fmt.Errorf("field '%s' is not valid", lowerCamelCase)
 		}
 	}
 	op, ok := node.(*parser.Operation)

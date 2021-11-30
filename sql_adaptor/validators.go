@@ -1,7 +1,6 @@
 package sql_adaptor
 
 import (
-	"errors"
 	"fmt"
 	"github.com/seldonio/goven/parser"
 	"strconv"
@@ -34,7 +33,7 @@ func NullValidator(_ string) error {
 func IntegerValidator(s string) error {
 	_, err := strconv.Atoi(s)
 	if err != nil {
-		return errors.New(fmt.Sprintf("value '%s' is not an integer", s))
+		return fmt.Errorf("value '%s' is not an integer", s)
 	}
 	return nil
 }
@@ -42,7 +41,7 @@ func IntegerValidator(s string) error {
 func NumericValidator(s string) error {
 	_, err := strconv.ParseFloat(s, 64)
 	if err != nil {
-		return errors.New(fmt.Sprintf("value '%s' is not numeric", s))
+		return fmt.Errorf("value '%s' is not numeric", s)
 	}
 	return nil
 }
