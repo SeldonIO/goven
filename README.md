@@ -13,11 +13,11 @@ Like a real life oven, it takes something raw (your database struct + a query in
 
 ### Basic Example
 
-TODO: here and in examples folder
+TODO: here and in examples directory
 
 ### Extension Example
 
-TODO: here and in examples folder
+TODO: here and in examples directory
 
 ## Grammar
 
