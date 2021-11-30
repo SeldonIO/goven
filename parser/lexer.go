@@ -157,9 +157,6 @@ func (s *Lexer) unread() {
 // isWhitespace returns true if the rune is a space, tab, or newline.
 func isWhitespace(ch rune) bool { return ch == ' ' || ch == '\t' || ch == '\n' }
 
-// isDigit returns true if the rune is a digit.
-func isDigit(ch rune) bool { return ch >= '0' && ch <= '9' || ch == '.' }
-
 func isSpecialChar(ch rune) bool {
 	specialChar := []rune{'=', '>', '!', '<', '(', ')'}
 	for _, char := range specialChar {

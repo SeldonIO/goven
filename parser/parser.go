@@ -111,7 +111,7 @@ func (p *Parser) parseOperation() (Node, error) {
 			}
 			op.Gate = lit
 		default:
-			return nil, errors.New(fmt.Sprintf("unexpected token %v", tok))
+			return nil, fmt.Errorf("unexpected token %v", tok)
 		}
 		tok, lit = p.scanIgnoreWhitespace()
 	}
@@ -142,13 +142,13 @@ func (p *Parser) parseExpression() (Node, error) {
 		// Looking for the Field name.
 		case exp.Field == "":
 			if tok != STRING {
-				return nil, errors.New(fmt.Sprintf("expected Field, got %v", tok))
+				return nil, fmt.Errorf("expected Field, got %v", tok)
 			}
 			exp.Field = lit
 		// Looking for the Comparator.
 		case exp.Comparator == "":
 			if !isTokenComparator(tok) {
-				return nil, errors.New(fmt.Sprintf("expected Comparator, got %v", tok))
+				return nil, fmt.Errorf("expected Comparator, got %v", tok)
 			}
 			exp.Comparator = lit
 		// Looking for the Value
@@ -158,7 +158,7 @@ func (p *Parser) parseExpression() (Node, error) {
 				if isValueEmpty {
 					break
 				} else {
-					return nil, errors.New(fmt.Sprintf("expected Value, got %v", tok))
+					return nil, fmt.Errorf("expected Value, got %v", tok)
 				}
 			}
 			if lit == "" {
