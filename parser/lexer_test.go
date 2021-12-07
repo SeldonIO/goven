@@ -1,8 +1,9 @@
 package parser
 
 import (
-	. "github.com/onsi/gomega"
 	"testing"
+
+	. "github.com/onsi/gomega"
 )
 
 func lexerHelper(lex *Lexer) ([]Token, []string) {
