@@ -3,10 +3,11 @@ package sql_adaptor_test
 import (
 	"database/sql"
 	"fmt"
-	"github.com/seldonio/goven/sql_adaptor"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/seldonio/goven/sql_adaptor"
 
 	. "github.com/onsi/gomega"
 )

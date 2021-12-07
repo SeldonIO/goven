@@ -3,9 +3,10 @@ package sql_adaptor
 import (
 	"errors"
 	"fmt"
-	"github.com/seldonio/goven/parser"
 	"regexp"
 	"strings"
+
+	"github.com/seldonio/goven/parser"
 
 	"github.com/iancoleman/strcase"
 )

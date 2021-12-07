@@ -2,8 +2,9 @@ package parser
 
 import (
 	"fmt"
-	. "github.com/onsi/gomega"
 	"testing"
+
+	. "github.com/onsi/gomega"
 )
 
 func TestBasicParser(t *testing.T) {

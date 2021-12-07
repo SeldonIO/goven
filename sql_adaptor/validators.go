@@ -2,8 +2,9 @@ package sql_adaptor
 
 import (
 	"fmt"
-	"github.com/seldonio/goven/parser"
 	"strconv"
+
+	"github.com/seldonio/goven/parser"
 )
 
 // DefaultMatcherWithValidator wraps the default matcher with validation on the value.
