@@ -26,6 +26,9 @@ func (p *Parser) Parse() (Node, error) {
 	}
 	// Try to peel like an onion.
 	gate := operation.(*Operation).Gate
+	if gate != "" && operation.(*Operation).RightNode == nil {
+		return nil, errors.New("found open gate")
+	}
 	for gate == "" {
 		operation = operation.(*Operation).LeftNode
 		if operation == nil {
@@ -167,6 +170,9 @@ func (p *Parser) parseExpression() (Node, error) {
 			exp.Value = lit
 		}
 		tok, lit = p.scan()
+	}
+	if exp.Field != "" && exp.Comparator == "" {
+		return nil, errors.New("found no comparator when expected")
 	}
 	return exp, nil
 }

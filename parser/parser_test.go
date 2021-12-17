@@ -132,7 +132,7 @@ func TestBasicParser(t *testing.T) {
 		}))
 	})
 	t.Run("parse operation camelCase", func(t *testing.T) {
-		test := "(TaskType=classification)"
+		test := "TaskType=classification"
 		parser := NewParser(test)
 		node, err := parser.Parse()
 		g.Expect(err).To(BeNil())
@@ -206,5 +206,27 @@ func TestBasicParser(t *testing.T) {
 		node, err = parser.Parse()
 		g.Expect(err).To(BeNil())
 		g.Expect(node.(*Operation).Gate).To(Equal("OR"))
+	})
+	t.Run("parser fails for invalid queries with missing comparator", func(t *testing.T) {
+		test := "name"
+		parser := NewParser(test)
+		_, err := parser.Parse()
+		g.Expect(err).ToNot(BeNil())
+
+		test = "name=default OR age"
+		parser = NewParser(test)
+		_, err = parser.Parse()
+		g.Expect(err).ToNot(BeNil())
+
+		test = ""
+		parser = NewParser(test)
+		_, err = parser.Parse()
+		g.Expect(err).ToNot(BeNil())
+	})
+	t.Run("parser fails for invalid queries with open gate", func(t *testing.T) {
+		test := "name=default AND"
+		parser := NewParser(test)
+		_, err := parser.Parse()
+		g.Expect(err).ToNot(BeNil())
 	})
 }
