@@ -67,6 +67,15 @@ func TestSqlAdaptor(t *testing.T) {
 			{
 				test: "age = wow",
 			},
+			{
+				test: "name = default AND",
+			},
+			{
+				test: "name",
+			},
+			{
+				test: "name = default AND age",
+			},
 		}
 		for _, testCase := range testCases {
 			sa, err := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
