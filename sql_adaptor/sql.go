@@ -112,3 +112,12 @@ func (s *SqlAdaptor) parseNodeToSQL(node parser.Node) (*SqlResponse, error) {
 	}
 	return &sq, nil
 }
+
+// StringSliceToInterfaceSlice is a helper function for making gorm queries.
+func StringSliceToInterfaceSlice(slice []string) []interface{} {
+	interSlice := []interface{}{}
+	for _, val := range slice {
+		interSlice = append(interSlice, val)
+	}
+	return interSlice
+}
