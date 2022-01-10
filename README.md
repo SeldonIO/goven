@@ -46,8 +46,8 @@ type User struct {
 
 type Tag struct {
 	gorm.Model
-	Key             string
-	Value           string
+	Key string
+	Value string
 }
 ```
 
