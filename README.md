@@ -13,11 +13,83 @@ Like a real life oven, it takes something raw (your database struct + a query in
 
 ### Basic Example
 
-TODO: here and in examples folder
+You can make a basic query using gorm against your database something like this: 
+
+```go
+reflection := reflect.ValueOf(&User{})
+queryAdaptor, err := sql_adaptor.NewDefaultAdaptorFromStruct(reflection)
+if err != nil {
+return nil, err
+}
+
+dbQuery := db.WithContext(ctx)
+parsedQuery, err := queryAdaptor.Parse("(name=james AND age > 11) OR email=fred@gmail.com")
+if err != nil {
+	return nil, err
+}
+dbQuery = query.Model(User{}).Where(parsedQuery.Raw, sql_adaptor.StringSliceToInterfaceSlice(parsedQuery.Values)...)
+err = dbQuery.Find(&users).Error
+```
+
+The values are interpolated to prevent injection attacks.
 
 ### Extension Example
 
-TODO: here and in examples folder
+You can also extend the basic query language with regex matchers.
+
+If you have something like a tag field on your user struct:
+
+```go
+type User struct {
+	gorm.Model
+    name string
+	...
+	tags []Tag
+}
+
+type Tag struct {
+	gorm.Model
+	Key             string
+	Value           string
+}
+```
+
+You can make this searchable my defining a regex and a custom matcher.
+
+e.g if we want `tags[key]=value` to work then we can add the following matcher when creating the adaptor.
+
+```go
+KeyValueRegex = `(tags)\[(.+)\]`
+
+// keyValueMatcher is a custom matcher for and tags[y].
+func keyValueMatcher(ex *goven_parser.Expression) (*goven_sql.SqlResponse, error) {
+	reg, err := regexp.Compile(KeyValueRegex)
+	if err != nil {
+		return nil, err
+	}
+	slice := reg.FindStringSubmatch(ex.Field)
+	if slice == nil {
+		return nil, errors.New("didn't match regex expression")
+	}
+	if len(slice) < 3 {
+		return nil, errors.New("regex match slice is too short")
+	}
+	sq := goven_sql.SqlResponse{
+		Raw:    fmt.Sprintf("id IN (SELECT user_id FROM %s WHERE key=? AND value%s?)", slice[1], ex.Comparator),
+		Values: []string{slice[2], ex.Value},
+	}
+	return &sq, nil
+}
+```
+
+### Protecting Fields
+
+Sometimes we may not want particular fields to be searchable by end users. You can protect them by:
+
+```go
+defaultFields := goven_sql.FieldParseValidatorFromStruct(gorm)
+delete(defaultFields, "fieldname")
+```
 
 ## Grammar
 
