@@ -40,7 +40,7 @@ You can also extend the basic query language with regex matchers. An example wou
 ```go
 type User struct {
 	gorm.Model
-    name string
+	name string
 	tags []Tag
 }
 
