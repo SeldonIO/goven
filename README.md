@@ -13,13 +13,13 @@ Like a real life oven, it takes something raw (your database struct + a query in
 
 ### Basic Example
 
-You can make a basic query using gorm against your database something like this: 
+You can make a basic query using gorm against your database, something like this: 
 
 ```go
 reflection := reflect.ValueOf(&User{})
 queryAdaptor, err := sql_adaptor.NewDefaultAdaptorFromStruct(reflection)
 if err != nil {
-return nil, err
+    return nil, err
 }
 
 dbQuery := db.WithContext(ctx)
@@ -35,15 +35,12 @@ The values are interpolated to prevent injection attacks.
 
 ### Extension Example
 
-You can also extend the basic query language with regex matchers.
-
-If you have something like a tag field on your user struct:
+You can also extend the basic query language with regex matchers. An example would be having a Tag struct on your User schema.
 
 ```go
 type User struct {
 	gorm.Model
     name string
-	...
 	tags []Tag
 }
 
@@ -84,7 +81,7 @@ func keyValueMatcher(ex *goven_parser.Expression) (*goven_sql.SqlResponse, error
 
 ### Protecting Fields
 
-Sometimes we may not want particular fields to be searchable by end users. You can protect them by:
+Sometimes we may not want particular fields to be searchable by end users. You can protect them by removing them from the fields mapping when creating your adaptor.
 
 ```go
 defaultFields := goven_sql.FieldParseValidatorFromStruct(gorm)
