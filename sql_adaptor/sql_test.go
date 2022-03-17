@@ -3,6 +3,7 @@ package sql_adaptor_test
 import (
 	"database/sql"
 	"fmt"
+	"github.com/seldonio/goven/example"
 	"reflect"
 	"testing"
 	"time"
@@ -57,29 +58,35 @@ func TestSqlAdaptor(t *testing.T) {
 	})
 	t.Run("test sql adaptor failure", func(t *testing.T) {
 		testCases := []TestCase{
+			//{
+			//	test: "(name=max AND invalidField=wow) OR age > 1",
+			//},
+			//{
+			//	test: "id = wow",
+			//},
+			//{
+			//	test: "age = wow",
+			//},
+			//{
+			//	test: "name = default AND",
+			//},
+			//{
+			//	test: "name",
+			//},
+			//{
+			//	test: "name = default AND age",
+			//},
 			{
-				test: "(name=max AND invalidField=wow) OR age > 1",
-			},
-			{
-				test: "id = wow",
-			},
-			{
-				test: "age = wow",
-			},
-			{
-				test: "name = default AND",
-			},
-			{
-				test: "name",
-			},
-			{
-				test: "name = default AND age",
+				test: "tags[auto_created]=true",
 			},
 		}
 		for _, testCase := range testCases {
-			sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
-			_, err := sa.Parse(testCase.test)
-			g.Expect(err).ToNot(BeNil(), fmt.Sprintf("failed case: %s", testCase.test))
+			//sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
+			sa, err := example.CreateModelAdaptor()
+			g.Expect(err).To(BeNil())
+			resp, err := sa.Parse(testCase.test)
+			g.Expect(err).To(BeNil(), fmt.Sprintf("failed case: %s", testCase.test))
+			fmt.Println(resp)
 		}
 	})
 	t.Run("test FieldParseValidatorFromStruct", func(t *testing.T) {

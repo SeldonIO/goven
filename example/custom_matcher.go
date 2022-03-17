@@ -39,7 +39,7 @@ type ModelDAO struct {
 }
 
 func NewModelDAO(db *gorm.DB) (*ModelDAO, error) {
-	adaptor, err := createModelAdaptor()
+	adaptor, err := CreateModelAdaptor()
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (u *ModelDAO) MakeQuery(q string) ([]Model, error) {
 	if err != nil {
 		return nil, err
 	}
-	query = query.Model(Model{}).Where(queryResp.Raw, sql_adaptor.StringSliceToInterfaceSlice(queryResp.Values)...)
+	query = query.Preload("Tags").Model(Model{}).Where(queryResp.Raw, sql_adaptor.StringSliceToInterfaceSlice(queryResp.Values)...)
 	err = query.Find(&models).Error
 	if err != nil {
 		return nil, err
@@ -76,7 +76,7 @@ func (u *ModelDAO) MakeQuery(q string) ([]Model, error) {
 	return models, nil
 }
 
-func createModelAdaptor() (*sql_adaptor.SqlAdaptor, error) {
+func CreateModelAdaptor() (*sql_adaptor.SqlAdaptor, error) {
 	matchers := map[*regexp.Regexp]sql_adaptor.ParseValidateFunc{}
 	fieldMappings := map[string]string{}
 
