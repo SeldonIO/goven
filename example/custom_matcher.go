@@ -20,8 +20,8 @@ const (
 
 type Model struct {
 	gorm.Model
-	Name         *string
-	Version      *string
+	Name         string
+	Version      string
 	CreatedAt    time.Time
 	Tags         []Tag      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
