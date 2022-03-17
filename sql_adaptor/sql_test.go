@@ -48,8 +48,7 @@ func TestSqlAdaptor(t *testing.T) {
 			},
 		}
 		for _, testCase := range testCases {
-			sa, err := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
-			g.Expect(err).To(BeNil(), fmt.Sprintf("failed case: %s", testCase.test))
+			sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
 			response, err := sa.Parse(testCase.test)
 			g.Expect(err).To(BeNil(), fmt.Sprintf("failed case: %s", testCase.test))
 			g.Expect(response.Raw).To(Equal(testCase.expectedRaw), fmt.Sprintf("failed case: %s", testCase.test))
@@ -78,9 +77,8 @@ func TestSqlAdaptor(t *testing.T) {
 			},
 		}
 		for _, testCase := range testCases {
-			sa, err := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
-			g.Expect(err).To(BeNil(), fmt.Sprintf("failed case: %s", testCase.test))
-			_, err = sa.Parse(testCase.test)
+			sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
+			_, err := sa.Parse(testCase.test)
 			g.Expect(err).ToNot(BeNil(), fmt.Sprintf("failed case: %s", testCase.test))
 		}
 	})
