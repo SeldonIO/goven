@@ -78,7 +78,7 @@ func TestSqlAdaptor(t *testing.T) {
 		}
 		for _, testCase := range testCases {
 			sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
-			resp, err := sa.Parse(testCase.test)
+			_, err := sa.Parse(testCase.test)
 			g.Expect(err).To(BeNil(), fmt.Sprintf("failed case: %s", testCase.test))
 		}
 	})
