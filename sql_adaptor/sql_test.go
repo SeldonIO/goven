@@ -3,7 +3,6 @@ package sql_adaptor_test
 import (
 	"database/sql"
 	"fmt"
-	"github.com/seldonio/goven/example"
 	"reflect"
 	"testing"
 	"time"
@@ -79,8 +78,6 @@ func TestSqlAdaptor(t *testing.T) {
 		}
 		for _, testCase := range testCases {
 			sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
-			sa, err := example.CreateModelAdaptor()
-			g.Expect(err).To(BeNil())
 			resp, err := sa.Parse(testCase.test)
 			g.Expect(err).To(BeNil(), fmt.Sprintf("failed case: %s", testCase.test))
 			fmt.Println(resp)

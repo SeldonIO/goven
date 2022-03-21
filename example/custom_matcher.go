@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/seldonio/goven/parser"
 	"reflect"
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/seldonio/goven/parser"
 
 	"github.com/seldonio/goven/sql_adaptor"
 	"gorm.io/gorm"
@@ -20,17 +21,17 @@ const (
 
 type Model struct {
 	gorm.Model
-	Name         string
-	Version      string
-	CreatedAt    time.Time
-	Tags         []Tag      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Name      string
+	Version   string
+	CreatedAt time.Time
+	Tags      []Tag `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 type Tag struct {
 	gorm.Model
-	Key             string
-	Value           string
-	ModelID 		uint
+	Key     string
+	Value   string
+	ModelID uint
 }
 
 type ModelDAO struct {

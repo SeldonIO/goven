@@ -1,16 +1,16 @@
 package integration
 
 import (
+	"log"
+	"testing"
+
 	embeddedpostgres "github.com/fergusstrange/embedded-postgres"
 	. "github.com/onsi/gomega"
 	"github.com/seldonio/goven/example"
-	"log"
-	"testing"
 )
 
-
 type testRigModel struct {
-	pg      *embeddedpostgres.EmbeddedPostgres
+	pg       *embeddedpostgres.EmbeddedPostgres
 	modelDAO *example.ModelDAO
 }
 
@@ -29,7 +29,7 @@ func newTestRigModel() (*testRigModel, error) {
 		return nil, err
 	}
 	return &testRigModel{
-		pg:      pg,
+		pg:       pg,
 		modelDAO: dao,
 	}, nil
 }
@@ -49,8 +49,8 @@ func TestSqlAdaptorModel(t *testing.T) {
 	// Setup entries
 	model1Tags := []example.Tag{
 		example.Tag{
-			Key:     "auto_created",
-			Value:   "true",
+			Key:   "auto_created",
+			Value: "true",
 		},
 	}
 	err = rig.modelDAO.CreateModel(&example.Model{
@@ -60,8 +60,8 @@ func TestSqlAdaptorModel(t *testing.T) {
 	g.Expect(err).To(BeNil())
 	model2Tags := []example.Tag{
 		example.Tag{
-			Key:     "auto_created",
-			Value:   "false",
+			Key:   "auto_created",
+			Value: "false",
 		},
 	}
 	err = rig.modelDAO.CreateModel(&example.Model{
