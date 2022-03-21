@@ -109,7 +109,7 @@ func keyValueMatcher(ex *parser.Expression) (*sql_adaptor.SqlResponse, error) {
 		return nil, errors.New("expected tags as field name")
 	}
 	sq := sql_adaptor.SqlResponse{
-		Raw:    fmt.Sprintf("id IN (SELECT model_id FROM %s WHERE key=? AND value%s?)", slice[1], ex.Comparator),
+		Raw:    fmt.Sprintf("id IN (SELECT model_id FROM %s WHERE key=? AND value%s? AND deleted_at is NULL)", slice[1], ex.Comparator),
 		Values: []string{slice[2], ex.Value},
 	}
 	return &sq, nil

@@ -58,30 +58,27 @@ func TestSqlAdaptor(t *testing.T) {
 	})
 	t.Run("test sql adaptor failure", func(t *testing.T) {
 		testCases := []TestCase{
-			//{
-			//	test: "(name=max AND invalidField=wow) OR age > 1",
-			//},
-			//{
-			//	test: "id = wow",
-			//},
-			//{
-			//	test: "age = wow",
-			//},
-			//{
-			//	test: "name = default AND",
-			//},
-			//{
-			//	test: "name",
-			//},
-			//{
-			//	test: "name = default AND age",
-			//},
 			{
-				test: "tags[auto_created]=true",
+				test: "(name=max AND invalidField=wow) OR age > 1",
+			},
+			{
+				test: "id = wow",
+			},
+			{
+				test: "age = wow",
+			},
+			{
+				test: "name = default AND",
+			},
+			{
+				test: "name",
+			},
+			{
+				test: "name = default AND age",
 			},
 		}
 		for _, testCase := range testCases {
-			//sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
+			sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
 			sa, err := example.CreateModelAdaptor()
 			g.Expect(err).To(BeNil())
 			resp, err := sa.Parse(testCase.test)

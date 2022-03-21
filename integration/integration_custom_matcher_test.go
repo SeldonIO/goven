@@ -77,7 +77,7 @@ func TestSqlAdaptorModel(t *testing.T) {
 		g.Expect(len(result[0].Tags)).To(Equal(1))
 		g.Expect(result[0].Tags[0].Key).To(Equal("auto_created"))
 	})
-	t.Run("test model tags", func(t *testing.T) {
+	t.Run("test model tags true", func(t *testing.T) {
 		result, err := rig.modelDAO.MakeQuery(`tags[auto_created]="true"`)
 		g.Expect(err).To(BeNil())
 		g.Expect(len(result)).To(Equal(1))
@@ -85,7 +85,7 @@ func TestSqlAdaptorModel(t *testing.T) {
 		g.Expect(len(result[0].Tags)).To(Equal(1))
 		g.Expect(result[0].Tags[0].Value).To(Equal("true"))
 	})
-	t.Run("test model tags", func(t *testing.T) {
+	t.Run("test model tags false", func(t *testing.T) {
 		result, err := rig.modelDAO.MakeQuery(`tags[auto_created]="false"`)
 		g.Expect(err).To(BeNil())
 		g.Expect(len(result)).To(Equal(1))
