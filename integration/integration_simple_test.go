@@ -12,53 +12,59 @@ import (
 	"gorm.io/gorm"
 )
 
-type testRig struct {
+type testRigUser struct {
 	pg      *embeddedpostgres.EmbeddedPostgres
 	userDAO *example.UserDAO
 }
 
-func newTestRig() (*testRig, error) {
+func setupDB() (*gorm.DB, *embeddedpostgres.EmbeddedPostgres, error) {
 	// Create Postgres db
 	config := embeddedpostgres.DefaultConfig().Port(9876)
 	pg := embeddedpostgres.NewDatabase(config)
 	err := pg.Start()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	// Connect gorm to db
 	dsn := "host=localhost port=9876 user=postgres password=postgres dbname=postgres sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
+		return nil, nil, err
+	}
+	return db, pg, err
+}
+
+func newTestRigUser() (*testRigUser, error) {
+	db, pg, err := setupDB()
+	if err != nil {
 		return nil, err
 	}
-
 	// Create User table
 	err = db.AutoMigrate(example.User{})
 	if err != nil {
 		return nil, err
 	}
-
 	dao, err := example.NewUserDAO(db)
 	if err != nil {
 		return nil, err
 	}
-	return &testRig{
+	return &testRigUser{
 		pg:      pg,
 		userDAO: dao,
 	}, nil
 }
 
-func (t *testRig) cleanup() {
+func (t *testRigUser) cleanup() {
 	err := t.pg.Stop()
 	if err != nil {
 		log.Print(err)
 	}
 }
 
-func TestSqlAdaptor(t *testing.T) {
+func TestSqlAdaptorUser(t *testing.T) {
 	g := NewGomegaWithT(t)
-	rig, err := newTestRig()
+	rig, err := newTestRigUser()
 	defer rig.cleanup()
 	g.Expect(err).To(BeNil())
 

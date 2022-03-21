@@ -27,10 +27,7 @@ type UserDAO struct {
 
 func NewUserDAO(db *gorm.DB) (*UserDAO, error) {
 	reflection := reflect.ValueOf(&User{})
-	adaptor, err := sql_adaptor.NewDefaultAdaptorFromStruct(reflection)
-	if err != nil {
-		return nil, err
-	}
+	adaptor := sql_adaptor.NewDefaultAdaptorFromStruct(reflection)
 	return &UserDAO{
 		db:           db,
 		queryAdaptor: adaptor,

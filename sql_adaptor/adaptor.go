@@ -6,11 +6,11 @@ import (
 	"strings"
 )
 
-func NewDefaultAdaptorFromStruct(gorm reflect.Value) (*SqlAdaptor, error) {
+func NewDefaultAdaptorFromStruct(gorm reflect.Value) *SqlAdaptor {
 	matchers := map[*regexp.Regexp]ParseValidateFunc{}
 	fieldMappings := map[string]string{}
 	defaultFields := FieldParseValidatorFromStruct(gorm)
-	return NewSqlAdaptor(fieldMappings, defaultFields, matchers), nil
+	return NewSqlAdaptor(fieldMappings, defaultFields, matchers)
 }
 
 // FieldParseValidatorFromStruct
