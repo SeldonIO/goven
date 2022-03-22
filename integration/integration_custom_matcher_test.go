@@ -9,6 +9,45 @@ import (
 	"github.com/seldonio/goven/example"
 )
 
+var (
+	model1 = &example.Model{
+		Name: "model1",
+		Tags: []example.Tag{
+			example.Tag{
+				Key:   "auto_created",
+				Value: "true",
+			},
+		},
+	}
+	model2 = &example.Model{
+		Name: "model2",
+		Tags: []example.Tag{
+			example.Tag{
+				Key:   "auto_created",
+				Value: "false",
+			},
+		},
+	}
+	deployment1 = &example.Model{
+		Name: "deployment1",
+		Tags: []example.Tag{
+			example.Tag{
+				Key:   "tag",
+				Value: "test_partial1",
+			},
+		},
+	}
+	deployment2 = &example.Model{
+		Name: "deployment2",
+		Tags: []example.Tag{
+			example.Tag{
+				Key:   "tag",
+				Value: "test_partial2",
+			},
+		},
+	}
+)
+
 type testRigModel struct {
 	pg       *embeddedpostgres.EmbeddedPostgres
 	modelDAO *example.ModelDAO
@@ -47,52 +86,10 @@ func TestSqlAdaptorModel(t *testing.T) {
 	defer rig.cleanup()
 	g.Expect(err).To(BeNil())
 	// Setup entries
-	model1Tags := []example.Tag{
-		example.Tag{
-			Key:   "auto_created",
-			Value: "true",
-		},
+	for _, model := range []*example.Model{model1, model2, deployment1, deployment2} {
+		err = rig.modelDAO.CreateModel(model)
+		g.Expect(err).To(BeNil())
 	}
-	err = rig.modelDAO.CreateModel(&example.Model{
-		Name: "model1",
-		Tags: model1Tags,
-	})
-	g.Expect(err).To(BeNil())
-	model2Tags := []example.Tag{
-		example.Tag{
-			Key:   "auto_created",
-			Value: "false",
-		},
-	}
-	err = rig.modelDAO.CreateModel(&example.Model{
-		Name: "model2",
-		Tags: model2Tags,
-	})
-	g.Expect(err).To(BeNil())
-
-	partial1 := []example.Tag{
-		example.Tag{
-			Key:   "tag",
-			Value: "test_partial1",
-		},
-	}
-	partial2 := []example.Tag{
-		example.Tag{
-			Key:   "tag",
-			Value: "test_partial2",
-		},
-	}
-	err = rig.modelDAO.CreateModel(&example.Model{
-		Name: "deployment1",
-		Tags: partial1,
-	})
-	g.Expect(err).To(BeNil())
-	err = rig.modelDAO.CreateModel(&example.Model{
-		Name: "deployment2",
-		Tags: partial2,
-	})
-	g.Expect(err).To(BeNil())
-
 	t.Run("test simple successful query", func(t *testing.T) {
 		result, err := rig.modelDAO.MakeQuery("name=model1")
 		g.Expect(err).To(BeNil())
