@@ -28,6 +28,13 @@ func TestLexer(t *testing.T) {
 		g.Expect(tokens).To(Equal([]Token{STRING, EQUAL, STRING, EOF}))
 		g.Expect(literals).To(Equal([]string{"name", "=", "model1", ""}))
 	})
+	t.Run("scan into tokens succeeds percent", func(t *testing.T) {
+		s := "name%model1"
+		lexer := NewLexerFromString(s)
+		tokens, literals := lexerHelper(lexer)
+		g.Expect(tokens).To(Equal([]Token{STRING, PERCENT, STRING, EOF}))
+		g.Expect(literals).To(Equal([]string{"name", "%", "model1", ""}))
+	})
 	t.Run("scan into tokens succeeds for quoted string", func(t *testing.T) {
 		s := "name=\"Iris Classifier\""
 		lexer := NewLexerFromString(s)

@@ -69,6 +69,11 @@ func TestSqlAdaptorModel(t *testing.T) {
 		Tags: model2Tags,
 	})
 	g.Expect(err).To(BeNil())
+	err = rig.modelDAO.CreateModel(&example.Model{
+		Name: "deployment1",
+		Tags: model2Tags,
+	})
+	g.Expect(err).To(BeNil())
 	t.Run("test simple successful query", func(t *testing.T) {
 		result, err := rig.modelDAO.MakeQuery("name=model1")
 		g.Expect(err).To(BeNil())
@@ -92,5 +97,10 @@ func TestSqlAdaptorModel(t *testing.T) {
 		g.Expect(result[0].Name).To(Equal("model2"))
 		g.Expect(len(result[0].Tags)).To(Equal(1))
 		g.Expect(result[0].Tags[0].Value).To(Equal("false"))
+	})
+	t.Run("test partial string match", func(t *testing.T) {
+		result, err := rig.modelDAO.MakeQuery(`name%"model"`)
+		g.Expect(err).To(BeNil())
+		g.Expect(len(result)).To(Equal(2))
 	})
 }

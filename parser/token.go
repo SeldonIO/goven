@@ -9,8 +9,8 @@ type TokenInfo struct {
 	Literal string
 }
 
-// tokenLookup is a map, useful for printing readable names of the tokens.
-var tokenLookup = map[Token]string{
+// TokenLookup is a map, useful for printing readable names of the tokens.
+var TokenLookup = map[Token]string{
 	OTHER:               "OTHER",
 	EOF:                 "EOF",
 	WS:                  "WS",
@@ -25,11 +25,12 @@ var tokenLookup = map[Token]string{
 	OR:                  "OR",
 	OPEN_BRACKET:        "(",
 	CLOSED_BRACKET:      ")",
+	PERCENT:             "%",
 }
 
 // String prints a human readable string name for a given token.
 func (t Token) String() (print string) {
-	return tokenLookup[t]
+	return TokenLookup[t]
 }
 
 // Declare the tokens here.
@@ -54,6 +55,7 @@ const (
 	LESS_THAN_EQUAL
 	EQUAL
 	NOT_EQUAL
+	PERCENT
 
 	// Keywords
 	AND

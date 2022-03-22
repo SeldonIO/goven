@@ -46,13 +46,18 @@ func TestSqlAdaptor(t *testing.T) {
 				expectedRaw:    "((name=? AND email=?) OR age>?)",
 				expectedValues: []string{"", "bob-dylan@aol.com", "1"},
 			},
+			{
+				test:           "(name%max AND email=bob-dylan@aol.com) OR age > 1",
+				expectedRaw:    "((name LIKE ? AND email=?) OR age>?)",
+				expectedValues: []string{"%max%", "bob-dylan@aol.com", "1"},
+			},
 		}
 		for _, testCase := range testCases {
 			sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
 			response, err := sa.Parse(testCase.test)
 			g.Expect(err).To(BeNil(), fmt.Sprintf("failed case: %s", testCase.test))
-			g.Expect(response.Raw).To(Equal(testCase.expectedRaw), fmt.Sprintf("failed case: %s", testCase.test))
-			g.Expect(response.Values).To(Equal(testCase.expectedValues), fmt.Sprintf("failed case: %s", testCase.test))
+			g.Expect(response.Raw).To(Equal(testCase.expectedRaw), fmt.Sprintf("failed case raw: %s", testCase.test))
+			g.Expect(response.Values).To(Equal(testCase.expectedValues), fmt.Sprintf("failed case values: %s", testCase.test))
 		}
 	})
 	t.Run("test sql adaptor failure", func(t *testing.T) {
