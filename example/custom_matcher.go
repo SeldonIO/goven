@@ -109,6 +109,16 @@ func keyValueMatcher(ex *parser.Expression) (*sql_adaptor.SqlResponse, error) {
 	if strings.ToLower(slice[1]) != "tags" {
 		return nil, errors.New("expected tags as field name")
 	}
+
+	// We need to handle the % comparator differently since it isn't implicitly supported in SQL.
+	if ex.Comparator == parser.TokenLookup[parser.PERCENT] {
+		fmtValue := fmt.Sprintf("%%%s%%", ex.Value)
+		sq := sql_adaptor.SqlResponse{
+			Raw:    fmt.Sprintf("id IN (SELECT model_id FROM %s WHERE key=? AND value LIKE ? AND deleted_at is NULL)", slice[1]),
+			Values: []string{slice[2], fmtValue},
+		}
+		return &sq, nil
+	}
 	sq := sql_adaptor.SqlResponse{
 		Raw:    fmt.Sprintf("id IN (SELECT model_id FROM %s WHERE key=? AND value%s? AND deleted_at is NULL)", slice[1], ex.Comparator),
 		Values: []string{slice[2], ex.Value},

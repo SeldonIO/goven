@@ -69,11 +69,30 @@ func TestSqlAdaptorModel(t *testing.T) {
 		Tags: model2Tags,
 	})
 	g.Expect(err).To(BeNil())
+
+	partial1 := []example.Tag{
+		example.Tag{
+			Key:   "tag",
+			Value: "test_partial1",
+		},
+	}
+	partial2 := []example.Tag{
+		example.Tag{
+			Key:   "tag",
+			Value: "test_partial2",
+		},
+	}
 	err = rig.modelDAO.CreateModel(&example.Model{
 		Name: "deployment1",
-		Tags: model2Tags,
+		Tags: partial1,
 	})
 	g.Expect(err).To(BeNil())
+	err = rig.modelDAO.CreateModel(&example.Model{
+		Name: "deployment2",
+		Tags: partial2,
+	})
+	g.Expect(err).To(BeNil())
+
 	t.Run("test simple successful query", func(t *testing.T) {
 		result, err := rig.modelDAO.MakeQuery("name=model1")
 		g.Expect(err).To(BeNil())
@@ -100,6 +119,11 @@ func TestSqlAdaptorModel(t *testing.T) {
 	})
 	t.Run("test partial string match", func(t *testing.T) {
 		result, err := rig.modelDAO.MakeQuery(`name%"model"`)
+		g.Expect(err).To(BeNil())
+		g.Expect(len(result)).To(Equal(2))
+	})
+	t.Run("test partial string tags", func(t *testing.T) {
+		result, err := rig.modelDAO.MakeQuery(`tags[tag] % partial`)
 		g.Expect(err).To(BeNil())
 		g.Expect(len(result)).To(Equal(2))
 	})

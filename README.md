@@ -94,7 +94,9 @@ Goven has a simple syntax that allows for powerful queries.
 
 Fields can be compared using the following operators: 
 
-`=`, `!=`, `>=`, `<=`, `<`, `>`
+`=`, `!=`, `>=`, `<=`, `<`, `>`, `%`
+
+The `%` operator allows you to do partial string matching using LIKE.
 
 Multiple queries can be combined using `AND`, `OR`.
 
