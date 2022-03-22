@@ -66,6 +66,8 @@ func (s *Lexer) Scan() TokenInfo {
 		return TokenInfo{OPEN_BRACKET, string(ch)}
 	case ch == ')':
 		return TokenInfo{CLOSED_BRACKET, string(ch)}
+	case ch == '%':
+		return TokenInfo{PERCENT, string(ch)}
 	case isWhitespace(ch):
 		s.unread()
 		return s.scanWhitespace()
@@ -158,7 +160,7 @@ func (s *Lexer) unread() {
 func isWhitespace(ch rune) bool { return ch == ' ' || ch == '\t' || ch == '\n' }
 
 func isSpecialChar(ch rune) bool {
-	specialChar := []rune{'=', '>', '!', '<', '(', ')'}
+	specialChar := []rune{'=', '>', '!', '<', '(', ')', '%'}
 	for _, char := range specialChar {
 		if ch == char {
 			return true
@@ -172,7 +174,7 @@ func isTokenGate(tok Token) bool {
 }
 
 func isTokenComparator(tok Token) bool {
-	return tok == GREATER_THAN || tok == GREATHER_THAN_EQUAL || tok == LESS_THAN || tok == LESS_THAN_EQUAL || tok == EQUAL || tok == NOT_EQUAL
+	return tok == GREATER_THAN || tok == GREATHER_THAN_EQUAL || tok == LESS_THAN || tok == LESS_THAN_EQUAL || tok == EQUAL || tok == NOT_EQUAL || tok == PERCENT
 }
 
 // eof represents a marker rune for the end of the reader.

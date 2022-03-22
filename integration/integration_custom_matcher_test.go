@@ -9,6 +9,45 @@ import (
 	"github.com/seldonio/goven/example"
 )
 
+var (
+	model1 = &example.Model{
+		Name: "model1",
+		Tags: []example.Tag{
+			example.Tag{
+				Key:   "auto_created",
+				Value: "true",
+			},
+		},
+	}
+	model2 = &example.Model{
+		Name: "model2",
+		Tags: []example.Tag{
+			example.Tag{
+				Key:   "auto_created",
+				Value: "false",
+			},
+		},
+	}
+	deployment1 = &example.Model{
+		Name: "deployment1",
+		Tags: []example.Tag{
+			example.Tag{
+				Key:   "tag",
+				Value: "test_partial1",
+			},
+		},
+	}
+	deployment2 = &example.Model{
+		Name: "deployment2",
+		Tags: []example.Tag{
+			example.Tag{
+				Key:   "tag",
+				Value: "test_partial2",
+			},
+		},
+	}
+)
+
 type testRigModel struct {
 	pg       *embeddedpostgres.EmbeddedPostgres
 	modelDAO *example.ModelDAO
@@ -47,28 +86,10 @@ func TestSqlAdaptorModel(t *testing.T) {
 	defer rig.cleanup()
 	g.Expect(err).To(BeNil())
 	// Setup entries
-	model1Tags := []example.Tag{
-		example.Tag{
-			Key:   "auto_created",
-			Value: "true",
-		},
+	for _, model := range []*example.Model{model1, model2, deployment1, deployment2} {
+		err = rig.modelDAO.CreateModel(model)
+		g.Expect(err).To(BeNil())
 	}
-	err = rig.modelDAO.CreateModel(&example.Model{
-		Name: "model1",
-		Tags: model1Tags,
-	})
-	g.Expect(err).To(BeNil())
-	model2Tags := []example.Tag{
-		example.Tag{
-			Key:   "auto_created",
-			Value: "false",
-		},
-	}
-	err = rig.modelDAO.CreateModel(&example.Model{
-		Name: "model2",
-		Tags: model2Tags,
-	})
-	g.Expect(err).To(BeNil())
 	t.Run("test simple successful query", func(t *testing.T) {
 		result, err := rig.modelDAO.MakeQuery("name=model1")
 		g.Expect(err).To(BeNil())
@@ -92,5 +113,15 @@ func TestSqlAdaptorModel(t *testing.T) {
 		g.Expect(result[0].Name).To(Equal("model2"))
 		g.Expect(len(result[0].Tags)).To(Equal(1))
 		g.Expect(result[0].Tags[0].Value).To(Equal("false"))
+	})
+	t.Run("test partial string match", func(t *testing.T) {
+		result, err := rig.modelDAO.MakeQuery(`name%"model"`)
+		g.Expect(err).To(BeNil())
+		g.Expect(len(result)).To(Equal(2))
+	})
+	t.Run("test partial string tags", func(t *testing.T) {
+		result, err := rig.modelDAO.MakeQuery(`tags[tag] % partial`)
+		g.Expect(err).To(BeNil())
+		g.Expect(len(result)).To(Equal(2))
 	})
 }

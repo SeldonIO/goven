@@ -50,7 +50,7 @@ func TestBasicParser(t *testing.T) {
 		}
 	})
 	t.Run("parse operations correctly formatted succeeds", func(t *testing.T) {
-		test := "name=max AND artifact=art1"
+		test := "name=max AND artifact%art1"
 		parser := NewParser(test)
 		expected := &Operation{
 			LeftNode: &Expression{
@@ -61,7 +61,7 @@ func TestBasicParser(t *testing.T) {
 			Gate: "AND",
 			RightNode: &Expression{
 				Field:      "artifact",
-				Comparator: "=",
+				Comparator: "%",
 				Value:      "art1",
 			},
 		}
