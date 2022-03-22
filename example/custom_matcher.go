@@ -111,17 +111,19 @@ func keyValueMatcher(ex *parser.Expression) (*sql_adaptor.SqlResponse, error) {
 	}
 
 	// We need to handle the % comparator differently since it isn't implicitly supported in SQL.
-	if ex.Comparator == parser.TokenLookup[parser.PERCENT] {
-		fmtValue := fmt.Sprintf("%%%s%%", ex.Value)
-		sq := sql_adaptor.SqlResponse{
-			Raw:    fmt.Sprintf("id IN (SELECT model_id FROM %s WHERE key=? AND value LIKE ? AND deleted_at is NULL)", slice[1]),
-			Values: []string{slice[2], fmtValue},
-		}
-		return &sq, nil
+	defaultMatch := sql_adaptor.DefaultMatcher(&parser.Expression{
+		Field:      "value",
+		Comparator: ex.Comparator,
+		Value:      ex.Value,
+	})
+	rawSnippet := defaultMatch.Raw
+	if len(defaultMatch.Values) != 1 {
+		return nil, errors.New("unexpected number of values from matcher")
 	}
+	value := defaultMatch.Values[0]
 	sq := sql_adaptor.SqlResponse{
-		Raw:    fmt.Sprintf("id IN (SELECT model_id FROM %s WHERE key=? AND value%s? AND deleted_at is NULL)", slice[1], ex.Comparator),
-		Values: []string{slice[2], ex.Value},
+		Raw:    fmt.Sprintf("id IN (SELECT model_id FROM %s WHERE key=? AND %s AND deleted_at is NULL)", slice[1], rawSnippet),
+		Values: []string{slice[2], value},
 	}
 	return &sq, nil
 }
