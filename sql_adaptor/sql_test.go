@@ -93,3 +93,18 @@ func TestSqlAdaptor(t *testing.T) {
 		g.Expect(ok).To(Equal(true))
 	})
 }
+
+func FuzzSqlAdaptor(f *testing.F) {
+	testcases := []string{"(name=max AND invalidField=wow) OR age > 1", "(name=max AND email=bob-dylan@aol.com) OR age > 1", "id = wow", "(name%max AND email=\"bob-dylan@aol.com\") OR age > 1"}
+	for _, tc := range testcases {
+		f.Add(tc)
+	}
+
+	f.Fuzz(func(t *testing.T, s string) {
+		sa := sql_adaptor.NewDefaultAdaptorFromStruct(reflect.ValueOf(&ExampleDBStruct{}))
+		response, err := sa.Parse(s)
+		if err != nil && response != nil {
+			t.Errorf("expected nil response when err is not nil")
+		}
+	})
+}

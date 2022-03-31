@@ -86,3 +86,21 @@ func TestLexer(t *testing.T) {
 		g.Expect(tokens).To(Equal([]Token{NOT_EQUAL, EQUAL, EOF}))
 	})
 }
+
+func FuzzLexer(f *testing.F) {
+	testcases := []string{">=!=", "string ( ) > >=", "< <= = != AND OR and or", "1  !=   \"2\""}
+	for _, tc := range testcases {
+		f.Add(tc)
+	}
+
+	f.Fuzz(func(t *testing.T, s string) {
+		lexer := NewLexerFromString(s)
+		tokens, _ := lexerHelper(lexer)
+		// This is really testing for panics only.
+		for _, token := range tokens {
+			if _, ok := TokenLookup[token]; !ok {
+				t.Errorf("unexpected token %v", token)
+			}
+		}
+	})
+}
