@@ -1,27 +1,30 @@
 module github.com/seldonio/goven
 
-go 1.16
+go 1.18
 
 require (
-	github.com/alexbrainman/sspi v0.0.0-20180613141037-e580b900e9f5 // indirect
-	github.com/dsnet/compress v0.0.1 // indirect
-	github.com/fergusstrange/embedded-postgres v1.12.0 // indirect
-	github.com/golang/snappy v0.0.1 // indirect
-	github.com/iancoleman/strcase v0.2.0 // indirect
+	github.com/fergusstrange/embedded-postgres v1.12.0
+	github.com/iancoleman/strcase v0.2.0
+	github.com/onsi/gomega v1.16.0
+	gorm.io/driver/postgres v1.2.3
+	gorm.io/gorm v1.22.4
+)
+
+require (
+	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
+	github.com/jackc/pgconn v1.10.1 // indirect
+	github.com/jackc/pgio v1.0.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgproto3/v2 v2.2.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
+	github.com/jackc/pgtype v1.9.1 // indirect
 	github.com/jackc/pgx/v4 v4.14.1 // indirect
-	github.com/jcmturner/gokrb5/v8 v8.2.0 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/lib/pq v1.10.4 // indirect
-	github.com/mholt/archiver v3.1.1+incompatible // indirect
-	github.com/nwaples/rardecode v1.0.0 // indirect
-	github.com/onsi/gomega v1.16.0 // indirect
-	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
+	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3 // indirect
-	gopkg.in/jcmturner/aescts.v1 v1.0.1 // indirect
-	gopkg.in/jcmturner/dnsutils.v1 v1.0.1 // indirect
-	gopkg.in/jcmturner/goidentity.v3 v3.0.0 // indirect
-	gopkg.in/jcmturner/gokrb5.v7 v7.5.0 // indirect
-	gopkg.in/jcmturner/rpc.v1 v1.1.0 // indirect
-	gorm.io/driver/postgres v1.2.3 // indirect
-	gorm.io/gorm v1.22.4 // indirect
+	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
+	golang.org/x/text v0.3.7 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

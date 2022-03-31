@@ -230,3 +230,22 @@ func TestBasicParser(t *testing.T) {
 		g.Expect(err).ToNot(BeNil())
 	})
 }
+
+func FuzzParser(f *testing.F) {
+	testcases := []string{">=!=", "name=default OR age", "< <= = != AND OR and or", "1  !=   \"2\"", "(Name=\"Iris Classifier\")"}
+	for _, tc := range testcases {
+		f.Add(tc)
+	}
+
+	f.Fuzz(func(t *testing.T, s string) {
+		parser := NewParser(s)
+		node, err := parser.Parse()
+		if err == nil {
+			_, nodeIsOp := node.(*Operation)
+			_, nodeIsExpr := node.(*Expression)
+			if !nodeIsOp && !nodeIsExpr {
+				t.Errorf("node must be either op or expression")
+			}
+		}
+	})
+}
