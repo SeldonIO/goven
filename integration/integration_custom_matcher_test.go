@@ -13,7 +13,7 @@ var (
 	model1 = &example.Model{
 		Name: "model1",
 		Tags: []example.Tag{
-			example.Tag{
+			{
 				Key:   "auto_created",
 				Value: "true",
 			},
@@ -22,7 +22,7 @@ var (
 	model2 = &example.Model{
 		Name: "model2",
 		Tags: []example.Tag{
-			example.Tag{
+			{
 				Key:   "auto_created",
 				Value: "false",
 			},
@@ -31,7 +31,7 @@ var (
 	deployment1 = &example.Model{
 		Name: "deployment1",
 		Tags: []example.Tag{
-			example.Tag{
+			{
 				Key:   "tag",
 				Value: "test_partial1",
 			},
@@ -40,7 +40,7 @@ var (
 	deployment2 = &example.Model{
 		Name: "deployment2",
 		Tags: []example.Tag{
-			example.Tag{
+			{
 				Key:   "tag",
 				Value: "test_partial2",
 			},
