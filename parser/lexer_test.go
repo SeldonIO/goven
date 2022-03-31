@@ -99,7 +99,7 @@ func FuzzLexer(f *testing.F) {
 		// This is really testing for panics only.
 		for _, token := range tokens {
 			if _, ok := TokenLookup[token]; !ok {
-				t.Errorf("Unexpected token %v",token)
+				t.Errorf("Unexpected token %v", token)
 			}
 		}
 	})
