@@ -1,3 +1,6 @@
+[![Go Reference](https://pkg.go.dev/badge/github.com/SeldonIO/goven.svg)](https://pkg.go.dev/github.com/SeldonIO/goven)
+[![Go Report Card](https://goreportcard.com/badge/github.com/seldonio/goven)](https://goreportcard.com/report/github.com/seldonio/goven)
+
 # Goven 🧑‍🍳
 
 Goven (go-oven) is a go library that allows you to have a drop-in query language for your database schema. 
