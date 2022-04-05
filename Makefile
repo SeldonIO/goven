@@ -3,3 +3,6 @@ lint:
 
 test:
 	go test ./...
+
+test-coverage:
+	go test ./... -race -covermode=atomic -coverprofile=coverage.out
