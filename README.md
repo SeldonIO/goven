@@ -1,6 +1,6 @@
-[![Go Reference](https://pkg.go.dev/badge/github.com/SeldonIO/goven.svg)](https://pkg.go.dev/github.com/SeldonIO/goven)
+[![Go Reference](https://pkg.go.dev/badge/github.com/seldonio/goven.svg)](https://pkg.go.dev/github.com/seldonio/goven)
 [![Go Report Card](https://goreportcard.com/badge/github.com/seldonio/goven)](https://goreportcard.com/report/github.com/seldonio/goven)
-[![codecov](https://codecov.io/gh/SeldonIO/goven/branch/master/graph/badge.svg?token=ZBCTOI896Y)](https://codecov.io/gh/SeldonIO/goven)
+[![codecov](https://codecov.io/gh/seldonio/goven/branch/master/graph/badge.svg?token=ZBCTOI896Y)](https://codecov.io/gh/seldonio/goven)
 
 # Goven 🧑‍🍳
 
