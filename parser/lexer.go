@@ -55,7 +55,6 @@ func (s *Lexer) Scan() TokenInfo {
 			return TokenInfo{NOT_EQUAL, "!="}
 		}
 		s.unread()
-		// TODO: we return an EOF here since ! without = is not valid in our grammar right now, but this may need to be tweaked to return an error.
 		return TokenInfo{EOF, ""}
 	}
 

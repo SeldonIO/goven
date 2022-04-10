@@ -24,8 +24,7 @@ type SqlResponse struct {
 }
 
 type SqlAdaptor struct {
-	// TODO: this feature is not yet implemented.
-	// fieldMappings is used to provide ability to map different frontend to backend field names.
+	// fieldMappings (currently unimplements) is used to provide ability to map different frontend to backend field names.
 	fieldMappings map[string]string
 	// defaultFields is the default field matcher, used when a regex isn't matched.
 	defaultFields map[string]ParseValidateFunc
