@@ -14,7 +14,6 @@ func NewDefaultAdaptorFromStruct(gorm reflect.Value) *SqlAdaptor {
 }
 
 // FieldParseValidatorFromStruct
-// TODO: gorm.model gets included as a valid field which we probably don't want.
 // Don't panic - reflection is only used once on initialisation.
 func FieldParseValidatorFromStruct(gorm reflect.Value) map[string]ParseValidateFunc {
 	defaultFields := map[string]ParseValidateFunc{}
