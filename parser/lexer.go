@@ -1,3 +1,4 @@
+// Package parser contains the definitions of the base tokens, the lexer that converts a query to a token stream, and the parser that converts a token stream into an AST.
 package parser
 
 import (
@@ -12,6 +13,7 @@ type Lexer struct {
 	r *bufio.Reader
 }
 
+// NewLexerFromString returns a Lexer for the provided string.
 func NewLexerFromString(s string) *Lexer {
 	return NewLexer(strings.NewReader(s))
 }

@@ -1,3 +1,4 @@
+// Package integration contains integration tests using the example DAOs.
 package integration
 
 import (
