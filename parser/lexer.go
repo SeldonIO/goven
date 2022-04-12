@@ -13,6 +13,7 @@ type Lexer struct {
 	r *bufio.Reader
 }
 
+// NewLexerFromString returns a Lexer for the provided string.
 func NewLexerFromString(s string) *Lexer {
 	return NewLexer(strings.NewReader(s))
 }

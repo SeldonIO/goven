@@ -19,6 +19,7 @@ func NewParser(s string) *Parser {
 	return &Parser{s: NewLexer(strings.NewReader(s)), raw: s}
 }
 
+// Parse takes the raw string and returns the root node of the AST.
 func (p *Parser) Parse() (Node, error) {
 	operation, err := p.parseOperation()
 	if err != nil {

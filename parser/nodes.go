@@ -27,13 +27,18 @@ type Operation struct {
 	RightNode Node
 }
 
+// Type returns the type for expression.
 func (e Expression) Type() string { return EXPRESSION }
+
+// Type returns the type for operation.
 func (o Operation) Type() string  { return OPERATION }
 
+// String returns the string representation of expression.
 func (e Expression) String() string {
 	return fmt.Sprintf("%v %v %v", e.Field, e.Comparator, e.Value)
 }
 
+// String returns the string representation of operation.
 func (o Operation) String() string {
 	if o.Gate == "" {
 		return fmt.Sprintf("(%v)", o.LeftNode)
