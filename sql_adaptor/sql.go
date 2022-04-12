@@ -18,11 +18,13 @@ type (
 	ParseValidateFunc = func(ex *parser.Expression) (*SqlResponse, error)
 )
 
+// SqlResponse is an object that stores the raw query, and the values to interpolate.
 type SqlResponse struct {
 	Raw    string
 	Values []string
 }
 
+// SqlAdaptor represents the adaptor tailored to your database schema.
 type SqlAdaptor struct {
 	// fieldMappings (currently unimplemented) is used to provide ability to map different frontend to backend field names.
 	fieldMappings map[string]string
@@ -32,6 +34,7 @@ type SqlAdaptor struct {
 	matchers map[*regexp.Regexp]ParseValidateFunc
 }
 
+// NewSqlAdaptor returns a SqlAdaptor populated with the provided arguments.
 func NewSqlAdaptor(fieldMappings map[string]string, defaultFields map[string]ParseValidateFunc, matchers map[*regexp.Regexp]ParseValidateFunc) *SqlAdaptor {
 	if fieldMappings == nil {
 		fieldMappings = map[string]string{}
@@ -50,6 +53,7 @@ func NewSqlAdaptor(fieldMappings map[string]string, defaultFields map[string]Par
 	return &sa
 }
 
+// Parse takes a string goven query and returns a SqlResponse that can be executed against your database.
 func (s *SqlAdaptor) Parse(str string) (*SqlResponse, error) {
 	newParser := parser.NewParser(str)
 	node, err := newParser.Parse()

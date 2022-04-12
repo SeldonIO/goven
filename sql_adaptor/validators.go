@@ -35,10 +35,12 @@ func DefaultMatcher(ex *parser.Expression) *SqlResponse {
 	return &sq
 }
 
+// NullValidator is a no-op validator on a string, always returns nil error.
 func NullValidator(_ string) error {
 	return nil
 }
 
+// IntegerValidator validates that the input is an integer.
 func IntegerValidator(s string) error {
 	_, err := strconv.Atoi(s)
 	if err != nil {
@@ -47,6 +49,7 @@ func IntegerValidator(s string) error {
 	return nil
 }
 
+// NumericValidator validates that the input is a number.
 func NumericValidator(s string) error {
 	_, err := strconv.ParseFloat(s, 64)
 	if err != nil {
