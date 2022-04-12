@@ -1,3 +1,4 @@
+// Package sql_adaptor provides functions to convert a goven query to a valid and safe SQL query.
 package sql_adaptor
 
 import (

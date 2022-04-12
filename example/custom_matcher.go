@@ -1,3 +1,4 @@
+// Package example provides example use cases of goven with a data model.
 package example
 
 import (
