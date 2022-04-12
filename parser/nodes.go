@@ -31,7 +31,7 @@ type Operation struct {
 func (e Expression) Type() string { return EXPRESSION }
 
 // Type returns the type for operation.
-func (o Operation) Type() string  { return OPERATION }
+func (o Operation) Type() string { return OPERATION }
 
 // String returns the string representation of expression.
 func (e Expression) String() string {

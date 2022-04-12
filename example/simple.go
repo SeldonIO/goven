@@ -9,6 +9,7 @@ import (
 	"github.com/seldonio/goven/sql_adaptor"
 	"gorm.io/gorm"
 )
+
 // User represents an simple example database schema.
 type User struct {
 	ID           uint
