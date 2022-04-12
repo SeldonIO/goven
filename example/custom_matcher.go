@@ -17,9 +17,10 @@ import (
 )
 
 const (
-	KeyValueRegex = `(.+)\[(.+)\]`
+	keyValueRegex = `(.+)\[(.+)\]`
 )
 
+// Model represents an example machine learning model schema.
 type Model struct {
 	gorm.Model
 	Name      string
@@ -28,6 +29,7 @@ type Model struct {
 	Tags      []Tag `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
+// Tag is a string key value tag.
 type Tag struct {
 	gorm.Model
 	Key     string
@@ -35,11 +37,13 @@ type Tag struct {
 	ModelID uint
 }
 
+// ModelDAO is an example DAO for machine learning models.
 type ModelDAO struct {
 	db           *gorm.DB
 	queryAdaptor *sql_adaptor.SqlAdaptor
 }
 
+// NewModelDAO returns a ModelDAO.
 func NewModelDAO(db *gorm.DB) (*ModelDAO, error) {
 	adaptor, err := CreateModelAdaptor()
 	if err != nil {
@@ -51,6 +55,7 @@ func NewModelDAO(db *gorm.DB) (*ModelDAO, error) {
 	}, nil
 }
 
+// CreateModel commits the provided model to the database.
 func (u *ModelDAO) CreateModel(model *Model) error {
 	ctx := context.Background()
 	tx := u.db.Begin().WithContext(ctx)
@@ -62,6 +67,7 @@ func (u *ModelDAO) CreateModel(model *Model) error {
 	return tx.Commit().Error
 }
 
+// MakeQuery takes a goven query and performs it against the model database.
 func (u *ModelDAO) MakeQuery(q string) ([]Model, error) {
 	var models []Model
 	ctx := context.Background()
@@ -78,12 +84,13 @@ func (u *ModelDAO) MakeQuery(q string) ([]Model, error) {
 	return models, nil
 }
 
+// CreateModelAdaptor creates a new SqlAdaptor for the model schema.
 func CreateModelAdaptor() (*sql_adaptor.SqlAdaptor, error) {
 	matchers := map[*regexp.Regexp]sql_adaptor.ParseValidateFunc{}
 	fieldMappings := map[string]string{}
 
 	// Custom matcher initialised here.
-	reg, err := regexp.Compile(KeyValueRegex)
+	reg, err := regexp.Compile(keyValueRegex)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +103,7 @@ func CreateModelAdaptor() (*sql_adaptor.SqlAdaptor, error) {
 
 // keyValueMatcher is a custom matcher for tags[x].
 func keyValueMatcher(ex *parser.Expression) (*sql_adaptor.SqlResponse, error) {
-	reg, err := regexp.Compile(KeyValueRegex)
+	reg, err := regexp.Compile(keyValueRegex)
 	if err != nil {
 		return nil, err
 	}

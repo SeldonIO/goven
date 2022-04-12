@@ -9,7 +9,7 @@ import (
 	"github.com/seldonio/goven/sql_adaptor"
 	"gorm.io/gorm"
 )
-
+// User represents an simple example database schema.
 type User struct {
 	ID           uint
 	Name         string
@@ -20,11 +20,13 @@ type User struct {
 	CreatedAt    time.Time
 }
 
+// UserDAO is an example DAO for user data.
 type UserDAO struct {
 	db           *gorm.DB
 	queryAdaptor *sql_adaptor.SqlAdaptor
 }
 
+// NewUserDAO returns a UserDAO.
 func NewUserDAO(db *gorm.DB) (*UserDAO, error) {
 	reflection := reflect.ValueOf(&User{})
 	adaptor := sql_adaptor.NewDefaultAdaptorFromStruct(reflection)
@@ -34,6 +36,7 @@ func NewUserDAO(db *gorm.DB) (*UserDAO, error) {
 	}, nil
 }
 
+// CreateUser commits the provided user to the database.
 func (u *UserDAO) CreateUser(user *User) error {
 	ctx := context.Background()
 	tx := u.db.Begin().WithContext(ctx)
@@ -45,6 +48,7 @@ func (u *UserDAO) CreateUser(user *User) error {
 	return tx.Commit().Error
 }
 
+// MakeQuery takes a goven query and performs it against the user database.
 func (u *UserDAO) MakeQuery(q string) ([]User, error) {
 	var users []User
 	ctx := context.Background()

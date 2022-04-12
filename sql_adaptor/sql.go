@@ -24,11 +24,11 @@ type SqlResponse struct {
 }
 
 type SqlAdaptor struct {
-	// fieldMappings (currently unimplements) is used to provide ability to map different frontend to backend field names.
+	// fieldMappings (currently unimplemented) is used to provide ability to map different frontend to backend field names.
 	fieldMappings map[string]string
 	// defaultFields is the default field matcher, used when a regex isn't matched.
 	defaultFields map[string]ParseValidateFunc
-	// Non default matchers, these are custom matchers used to extend Goven's functionality.
+	// Non default matchers, these are custom matchers used to extend goven's functionality.
 	matchers map[*regexp.Regexp]ParseValidateFunc
 }
 
